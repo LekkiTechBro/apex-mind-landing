@@ -114,6 +114,63 @@ header.site-header {
 }
 
 /* =====================================================================
+   SEARCH-THIS-PAGE PANEL
+   Same collapsible pattern as .mobile-drawer (max-height transition)
+   so it reuses a technique you already know rather than introducing a
+   second animation approach for what is conceptually the same thing:
+   a hidden panel that drops down from the header.
+   ===================================================================== */
+.search-panel {
+  overflow: hidden;
+  max-height: 0;
+  background: var(--color-surface);
+  border-bottom: 1px solid rgba(6, 48, 28, 0.08);
+  transition: max-height .25s ease-out;
+}
+.search-panel.open { max-height: 64px; }
+.search-panel-inner {
+  max-width: var(--container-max); margin: 0 auto; padding: 10px 20px;
+  display: flex; align-items: center; gap: 10px;
+}
+.search-panel-inner svg { flex-shrink: 0; }
+#searchInput {
+  flex: 1; min-width: 0; border: 1px solid var(--color-border); border-radius: 999px;
+  padding: 8px 14px; font-size: 14px; outline: none; color: var(--color-ink);
+  transition: border-color .2s;
+}
+#searchInput:focus { border-color: var(--color-primary); }
+.search-count {
+  font-size: 12px; font-weight: 500; color: var(--color-text-muted);
+  white-space: nowrap; min-width: 68px; text-align: center;
+}
+.search-nav-btn, .search-close-btn {
+  flex-shrink: 0; padding: 6px; border-radius: 999px; color: var(--color-ink);
+  display: flex; align-items: center; justify-content: center; transition: background .2s;
+}
+.search-nav-btn:hover:not(:disabled), .search-close-btn:hover { background: rgba(6, 98, 51, 0.08); }
+.search-nav-btn:disabled { opacity: .3; cursor: default; }
+
+mark.search-hit {
+  background: rgba(246, 179, 29, 0.4);
+  color: inherit;
+  border-radius: 3px;
+  padding: 0 1px;
+}
+mark.search-hit.active {
+  background: var(--color-accent);
+  color: var(--color-ink);
+  box-shadow: 0 0 0 2px var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .search-panel-inner { padding: 10px 32px; }
+  #searchInput { max-width: 360px; flex: 0 1 360px; }
+}
+@media (min-width: 1024px) {
+  .search-panel-inner { padding: 10px 40px; }
+}
+
+/* =====================================================================
    HERO
    ===================================================================== */
 .hero { padding: 36px 20px 40px; max-width: var(--container-max); margin: 0 auto; }
